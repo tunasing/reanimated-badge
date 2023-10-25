@@ -9,18 +9,23 @@ Simple animated shaped text/number badge
 ## Feature
 
 -   on text state change, the badge shows bounce animation.
--   when text state is changed to `undefined`, the badge animates out.
 -   when text state is set, the badge animates in.
+-   when text state is changed to `undefined`, the badge animates out.
+-   customization properties `color`, `border`, `fontColor`.
+
+## Instructions
+
+-   define Asset directory.
+-   have required .svg image available in asset directory
+
+> `const RoundBadge = <Badge text={5} border={3} shape={'square'} color={'purple'}/>`;
+>
+> `const SvgBadge = <Badge.Svg source={'roundTriangle'} text={5} border={3} color={'purple'}/>`;
 
 ## Pre-requisites
 
 -   react-native-reanimated (package)
 -   react-native-svg (package)
-
-### to use Badge.Svg
-
--   define Asset directory.
--   have required .svg image available in asset directory
 
 ## compatibility
 
