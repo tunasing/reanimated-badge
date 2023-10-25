@@ -16,11 +16,16 @@ Simple animated shaped text/number badge
 ## Instructions
 
 -   define Asset directory.
--   have required .svg image available in asset directory
+-   have required .svg image available in asset directory(Badge.Svg)
 
-> `const RoundBadge = <Badge text={5} border={3} shape={'square'} color={'purple'}/>`;
->
-> `const SvgBadge = <Badge.Svg source={'roundTriangle'} text={5} border={3} color={'purple'}/>`;
+```
+<View>
+    <Badge text={5} border={3} shape={'square'} color={'purple'}/>
+</View>
+<View>
+    <Badge.Svg source={'roundTriangle'} text={5} color={'purple'}/>
+</View>
+```
 
 ## Pre-requisites
 
