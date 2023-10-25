@@ -4,16 +4,19 @@
  * Author: John Chan Kah Seng (johnks.chan@gmail.com)
  * -----
  * Created: 25th October 2023 11:29am
- * Modified: 25th October 2023 11:32am     by: John Chan Kah Seng
+ * Modified: 25th October 2023 3:30pm     by: John Chan Kah Seng
  * -----
  * ReactNative: 0.70.2   ReactNavigation: 6.x
  * Copyright 2016 - 2023 Chanksis.
  ***/
+/**
+ * # rnOthers
+ */
 declare module 'rnOthers' {
   import * as Rn from 'react-native';
   import Asset from 'Assets';
   //+ Badge `
-  export interface BadgeProps extends Omit<Rn.ViewProps, 'style'> {
+  interface BadgeProps extends Rn.ViewProps {
     /** text in Badge, undefined will hide badge */
     text: string | number | undefined;
     /** shape of badge, otherwise rounded box (default true) */
@@ -28,12 +31,11 @@ declare module 'rnOthers' {
     color?: Rn.ColorValue;
     /** Font Color (matches border color if specified) */
     fontColor?: Rn.ColorValue;
-    /** Absolute position props */
-    position?: Position;
-    /** Badge Text Style */
-    style?: Rn.StyleProp<Rn.TextStyle>;
   }
-  export interface BadgeSvgProps extends Omit<BadgeProps, 'round'> {
+  interface BadgeSvgProps extends Omit<BadgeProps, 'round'> {
+    /** source of SVG image used as badge shape */
     source: Asset.SvgTag;
+    /** Badge Text style */
+    txtStyle?: Rn.StyleProp<Rn.TextStyle>;
   }
 }

@@ -4,12 +4,12 @@
  * Author: John Chan Kah Seng (johnks.chan@gmail.com)
  * -----
  * Created: 5th September 2023 3:40pm
- * Modified: 25th October 2023 11:32am     by: John Chan Kah Seng
+ * Modified: 25th October 2023 3:30pm     by: John Chan Kah Seng
  * -----
  * ReactNative: 0.70.2   ReactNavigation: 6.x
  * Copyright 2016 - 2023 Chanksis.
  ***/
-import React, {useEffect, useState} from 'react';
+import R from 'react';
 import {StyleSheet, Text} from 'react-native';
 import Animated, {
   useSharedValue,
@@ -51,10 +51,10 @@ const Badge: React.FC<BadgeProps> & FCnamespace = ({
   size: fontSize = 14,
   color: backgroundColor = 'red',
   fontColor: color = 'white',
-  position = {top: 0, left: 0},
   style,
 }) => {
-  const [height, setHeight] = useState(0);
+  const [height, setHeight] = R.useState(0);
+  const UAS = useAnimationEffects(text, height);
   const length = height + border * 2;
   const vwSty = {
     minWidth: length,
@@ -63,30 +63,11 @@ const Badge: React.FC<BadgeProps> & FCnamespace = ({
     borderWidth: border,
     backgroundColor,
   };
-  //^ useEffect
-  useEffect(() => {
-    shared.value =
-      text === undefined
-        ? bounceOut
-        : shared.value === 1
-        ? bounceInIn
-        : bounceIn;
-  }, [text]);
-  //^ useAnimatedStyle
-  const shared = useSharedValue(0);
-  const UAS = useAnimatedStyle(() => {
-    return {
-      transform: [{scale: shared.value}],
-      opacity: height ? shared.value : 0,
-    };
-  });
   return (
-    <Animated.View
-      exiting={ZoomOut}
-      style={[{...position}, UAS, vwSty, styles.shape]}>
+    <Animated.View exiting={ZoomOut} style={[style, UAS, vwSty, styles.shape]}>
       <Text
         onLayout={e => setHeight(e.nativeEvent.layout.height)}
-        style={[style, styles.txt, {color, fontSize}]}
+        style={[styles.txt, {color, fontSize}]}
         children={text}
       />
     </Animated.View>
@@ -108,33 +89,17 @@ const Svg: React.FC<BadgeSvgProps> = ({
   size: fontSize = 14,
   color: shapeColor = 'red',
   fontColor: color = 'white',
-  position = {top: 0, left: 0},
+  txtStyle,
   style,
 }) => {
-  const [height, setHeight] = React.useState(0);
+  const [height, setHeight] = R.useState(0);
+  const UAS = useAnimationEffects(text, height);
   const length = height + border * 2;
   const minWidth = length;
-  //^ useRef
-  React.useEffect(() => {
-    shared.value =
-      text === undefined
-        ? bounceOut
-        : shared.value === 1
-        ? bounceInIn
-        : bounceIn;
-  }, [text]);
-  //^ useAnimatedStyle
-  const shared = useSharedValue(0);
-  const UAS = useAnimatedStyle(() => {
-    return {
-      transform: [{scale: shared.value}],
-      opacity: height ? shared.value : 0,
-    };
-  });
   return (
     <Animated.View
       exiting={ZoomOut}
-      style={[UAS, {minWidth, ...position}, styles.shape]}>
+      style={[UAS, {minWidth}, style, styles.shape]}>
       <ImageBackground.Svg
         source={source}
         fill={shapeColor}
@@ -144,7 +109,7 @@ const Svg: React.FC<BadgeSvgProps> = ({
       />
       <Text
         onLayout={e => setHeight(e.nativeEvent.layout.height)}
-        style={[style, styles.txt, {color, fontSize}]}
+        style={[styles.txt, txtStyle, {color, fontSize}]}
         children={text}
       />
     </Animated.View>
@@ -156,7 +121,6 @@ export default Badge;
 //^ Styles ~
 const styles = StyleSheet.create({
   shape: {
-    position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -166,3 +130,30 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+/**
+ * ### useAnimationEffects
+ */
+const useAnimationEffects = (
+  text: string | number | undefined,
+  height: number,
+) => {
+  const shared = useSharedValue(0);
+  //^ useRef
+  R.useEffect(() => {
+    shared.value =
+      text === undefined
+        ? bounceOut
+        : shared.value === 1
+        ? bounceInIn
+        : bounceIn;
+  }, [text]);
+  //^ useAnimatedStyle
+  const UAS = useAnimatedStyle(() => {
+    return {
+      transform: [{scale: shared.value}],
+      opacity: height ? shared.value : 0,
+    };
+  });
+  return UAS;
+};
