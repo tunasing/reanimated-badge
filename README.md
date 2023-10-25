@@ -3,6 +3,8 @@ Simple animated shaped text/number badge
 
 ![image](https://github.com/tunasing/reanimated-badge/assets/5899265/a97de38d-92ff-49b8-a95f-8f2e25daddb6)
 
+>*use extended Image/ImageBackground provided instead of react-native's.*
+
 ## Pre-requisites
 - react-native-reanimated (package)
 - react-native-svg (package)
